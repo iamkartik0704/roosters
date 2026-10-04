@@ -323,92 +323,114 @@ export default function JobForm() {
 
         {form.mode !== 'heartbeat' && (
           <>
-            <label>
-              Headers (JSON) {canHeadersBody ? '' : <span className="hint">— Pro</span>}
-          <textarea
-            rows={3}
-            disabled={!canHeadersBody}
-            placeholder={editing ? '(unchanged)' : '{"Authorization": "Bearer …"}'}
-            value={form.headersJson}
-            onChange={(e) => {
-              set({ headersJson: e.target.value });
-              setHeadersTouched(true);
-            }}
-          />
-          {editing && !headersTouched && (
-            <span className="hint">Leave empty to keep the stored headers.</span>
-          )}
-        </label>
+            {canHeadersBody && limits.successConditions ? (
+              <>
+                <label>
+                  Headers (JSON)
+                  <textarea
+                    rows={3}
+                    placeholder={editing ? '(unchanged)' : '{"Authorization": "Bearer …"}'}
+                    value={form.headersJson}
+                    onChange={(e) => {
+                      set({ headersJson: e.target.value });
+                      setHeadersTouched(true);
+                    }}
+                  />
+                  {editing && !headersTouched && (
+                    <span className="hint">Leave empty to keep the stored headers.</span>
+                  )}
+                </label>
 
-        {(form.method === 'POST' || form.method === 'PUT' || form.method === 'PATCH') && (
-          <label>
-            Request body {canHeadersBody ? '' : <span className="hint">— Pro</span>}
-            <textarea
-              rows={3}
-              disabled={!canHeadersBody}
-              placeholder={editing ? '(unchanged)' : '{"key": "value"}'}
-              value={form.body}
-              onChange={(e) => {
-                set({ body: e.target.value });
-                setBodyTouched(true);
-              }}
-            />
-            {editing && !bodyTouched && (
-              <span className="hint">Leave empty to keep the stored body.</span>
+                {(form.method === 'POST' || form.method === 'PUT' || form.method === 'PATCH') && (
+                  <label>
+                    Request body
+                    <textarea
+                      rows={3}
+                      placeholder={editing ? '(unchanged)' : '{"key": "value"}'}
+                      value={form.body}
+                      onChange={(e) => {
+                        set({ body: e.target.value });
+                        setBodyTouched(true);
+                      }}
+                    />
+                    {editing && !bodyTouched && (
+                      <span className="hint">Leave empty to keep the stored body.</span>
+                    )}
+                  </label>
+                )}
+
+                <fieldset>
+                  <legend>Success conditions</legend>
+                  <p className="hint">Count this job as failed unless the response matches.</p>
+                  <div className="field-row">
+                    <label>
+                      Allowed status codes
+                      <input
+                        placeholder="200, 204"
+                        value={form.statusCodes}
+                        onChange={(e) => set({ statusCodes: e.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Body contains
+                      <input
+                        placeholder='"ok":true'
+                        value={form.bodyContains}
+                        onChange={(e) => set({ bodyContains: e.target.value })}
+                      />
+                    </label>
+                  </div>
+                  <div className="field-row">
+                    <label>
+                      JSON path
+                      <input
+                        placeholder="data.status"
+                        value={form.jsonPath}
+                        onChange={(e) => set({ jsonPath: e.target.value })}
+                      />
+                    </label>
+                    <label>
+                      JSON value equals
+                      <input
+                        placeholder="healthy"
+                        value={form.jsonEquals}
+                        onChange={(e) => set({ jsonEquals: e.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Retries on failure
+                      <select value={form.retries} onChange={(e) => set({ retries: e.target.value })}>
+                        <option value="0">None</option>
+                        <option value="1">1 Retry</option>
+                        <option value="2">2 Retries</option>
+                        <option value="3">3 Retries</option>
+                      </select>
+                    </label>
+                  </div>
+                </fieldset>
+              </>
+            ) : (
+              <div style={{
+                marginTop: '16px',
+                padding: '48px 32px',
+                textAlign: 'center',
+                background: 'repeating-linear-gradient(45deg, #0a0a0a, #0a0a0a 10px, #0f0f0f 10px, #0f0f0f 20px)',
+                border: '1px solid var(--dark-grey)',
+                borderRadius: '4px',
+                boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8)'
+              }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" style={{ marginBottom: '12px', opacity: 0.5 }}>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <p className="muted" style={{ marginBottom: '24px', fontSize: '15px' }}>
+                  Upgrade to Pro to unlock custom Headers, Request Bodies, Retries, and advanced Success Conditions.
+                </p>
+                <a href="/billing" className="btn btn-primary">Upgrade to Pro</a>
+              </div>
             )}
-          </label>
+          </>
         )}
-
-        <fieldset disabled={!limits.successConditions}>
-          <legend>Success conditions {limits.successConditions ? '' : '— Pro'}</legend>
-          <p className="hint">Count this job as failed unless the response matches.</p>
-          <div className="field-row">
-            <label>
-              Allowed status codes
-              <input
-                placeholder="200, 204"
-                value={form.statusCodes}
-                onChange={(e) => set({ statusCodes: e.target.value })}
-              />
-            </label>
-            <label>
-              Body contains
-              <input
-                placeholder='"ok":true'
-                value={form.bodyContains}
-                onChange={(e) => set({ bodyContains: e.target.value })}
-              />
-            </label>
-          </div>
-          <div className="field-row">
-            <label>
-              JSON path
-              <input
-                placeholder="data.status"
-                value={form.jsonPath}
-                onChange={(e) => set({ jsonPath: e.target.value })}
-              />
-            </label>
-            <label>
-              JSON value equals
-              <input
-                placeholder="healthy"
-                value={form.jsonEquals}
-                onChange={(e) => set({ jsonEquals: e.target.value })}
-              />
-            </label>
-            <label>
-              Retries on failure
-              <select value={form.retries} onChange={(e) => set({ retries: e.target.value })}>
-                <option value="0">None</option>
-                <option value="1">1 Retry</option>
-                <option value="2">2 Retries</option>
-                <option value="3">3 Retries</option>
-              </select>
-            </label>
-          </div>
-        </fieldset>
-        </>)}
 
         {error && <p className="error">{error}</p>}
         {testOutcome && (
