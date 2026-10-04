@@ -111,12 +111,20 @@ jobsRoutes.post('/', async (c) => {
   }
 
   const db = c.env.DB;
-  
-  const host = new URL(input.url).hostname;
-  const userJobs = await db.prepare('SELECT url FROM jobs WHERE user_id = ?1').bind(user.id).all<{url: string}>();
-  const hostCount = (userJobs.results ?? []).filter(r => new URL(r.url).hostname === host).length;
-  if (hostCount >= 5) {
-    return c.json({ error: 'You can only have 5 jobs pointing to the same host.' }, 403);
+
+  if (input.mode !== 'heartbeat') {
+    const host = new URL(input.url).hostname;
+    const userJobs = await db.prepare('SELECT url FROM jobs WHERE user_id = ?1').bind(user.id).all<{url: string}>();
+    const hostCount = (userJobs.results ?? []).filter(r => {
+      try {
+        return new URL(r.url).hostname === host;
+      } catch {
+        return false;
+      }
+    }).length;
+    if (hostCount >= 5) {
+      return c.json({ error: 'You can only have 5 jobs pointing to the same host.' }, 403);
+    }
   }
 
   const userJobCount = await db
