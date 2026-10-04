@@ -1,0 +1,228 @@
+:root {
+  --blueprint-bg: #0b2b53;
+  --blueprint-grid: #1d4f88;
+  --blueprint-card: rgba(8, 32, 64, 0.85);
+  --blueprint-line: #33a1fd;
+  --blueprint-text: #e6f2ff;
+  --blueprint-muted: #80a8d4;
+  --up: #39ff14;
+  --down: #ff3366;
+  --paused: #ffcc00;
+  --radius: 0px; /* Sharp corners for drafting */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--blueprint-bg);
+  /* Architectural graph paper grid */
+  background-image: 
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--blueprint-text);
+  font: 13px/1.6 'Roboto Mono', 'Fira Code', 'Courier New', monospace;
+  text-transform: uppercase;
+}
+
+/* Typography */
+h1, h2, h3, h4 { 
+  font-family: inherit; 
+  font-weight: normal; 
+  margin: 0; 
+  color: var(--blueprint-line);
+  letter-spacing: 0.1em;
+}
+h1 { font-size: 22px; margin-bottom: 8px; border-bottom: 2px solid var(--blueprint-line); display: inline-block; padding-bottom: 4px; }
+h2 { font-size: 16px; margin: 32px 0 12px; border-bottom: 1px dashed var(--blueprint-line); padding-bottom: 4px; }
+h3 { font-size: 14px; margin: 0 0 8px; }
+h4 { font-size: 13px; margin: 0 0 6px; color: var(--blueprint-text); }
+
+/* Layout */
+.shell { min-height: 100vh; display: flex; flex-direction: column; }
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; background: var(--blueprint-card); 
+  border-bottom: 2px solid var(--blueprint-line);
+  backdrop-filter: blur(4px);
+}
+.brand { 
+  display: inline-flex; align-items: center; gap: 12px; 
+  font-weight: bold; font-size: 18px; color: var(--blueprint-text); 
+  text-decoration: none; letter-spacing: 0.15em; 
+}
+.brand-dot { 
+  width: 8px; height: 8px; 
+  background: var(--blueprint-bg);
+  border: 1px solid var(--blueprint-line);
+  position: relative;
+}
+/* Drafting crosshair on brand-dot */
+.brand-dot::before, .brand-dot::after {
+  content: ''; position: absolute; background: var(--blueprint-line);
+}
+.brand-dot::before { top: 3px; left: -4px; width: 14px; height: 1px; }
+.brand-dot::after { left: 3px; top: -4px; width: 1px; height: 14px; }
+
+.topnav { display: flex; align-items: center; gap: 24px; font-size: 13px; }
+.topnav a { color: var(--blueprint-muted); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.topnav a.active { color: var(--blueprint-text); border-bottom-color: var(--blueprint-line); }
+.nav-email { color: var(--blueprint-muted); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.content { flex: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 40px 24px 64px; }
+.footer { padding: 20px 24px; color: var(--blueprint-muted); font-size: 11px; border-top: 1px solid var(--blueprint-line); background: var(--blueprint-card); text-align: right; }
+
+/* Utilities */
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
+.breadcrumbs { margin: 0 0 16px; }
+.breadcrumbs a { color: var(--blueprint-muted); text-decoration: none; font-size: 11px; border: 1px solid transparent; }
+.breadcrumbs a:hover { border-bottom-color: var(--blueprint-muted); }
+.muted { color: var(--blueprint-muted); }
+.small { font-size: 11px; }
+.hint { display: block; color: var(--blueprint-muted); font-size: 11px; margin-top: 4px; }
+.success { color: var(--up); }
+.error { color: var(--down); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 6px 12px; border-radius: 0; border: 1px solid var(--blueprint-muted);
+  font: inherit; font-size: 12px; cursor: pointer; text-decoration: none;
+  background: transparent; color: var(--blueprint-text);
+  transition: all 0.1s;
+}
+.btn:hover { background: rgba(51, 161, 253, 0.15); border-color: var(--blueprint-line); color: var(--blueprint-line); }
+.btn:active { background: rgba(51, 161, 253, 0.3); }
+.btn-primary { border-color: var(--blueprint-line); color: var(--blueprint-line); background: rgba(51, 161, 253, 0.05); }
+.btn-primary:hover { background: rgba(51, 161, 253, 0.2); }
+.btn-danger { border-color: var(--down); color: var(--down); }
+.btn-danger:hover { background: rgba(255, 51, 102, 0.15); }
+.btn-small { padding: 4px 8px; font-size: 11px; }
+.btn-ghost { border-color: transparent; }
+.btn-ghost:hover { border-color: var(--blueprint-muted); background: rgba(128, 168, 212, 0.1); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Cards & Architecture Elements */
+.card {
+  background: var(--blueprint-card);
+  border: 1px solid var(--blueprint-line);
+  padding: 24px;
+  position: relative;
+  box-shadow: 4px 4px 0 rgba(29, 79, 136, 0.5); /* Hard drafting shadow */
+}
+/* Drafting corner markers */
+.card::before, .card::after {
+  content: ''; position: absolute; background: var(--blueprint-line);
+}
+.card::before { top: -4px; left: -4px; width: 8px; height: 8px; border: 1px solid var(--blueprint-line); background: var(--blueprint-bg); }
+.card::after { bottom: -4px; right: -4px; width: 8px; height: 8px; border: 1px solid var(--blueprint-line); background: var(--blueprint-bg); }
+
+.empty-state { text-align: center; padding: 48px 24px; border: 1px dashed var(--blueprint-line); }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 24px 0; }
+
+/* Jobs Table (Blueprint Matrix) */
+.jobs-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--blueprint-card); 
+  border: 2px solid var(--blueprint-line);
+}
+.jobs-table thead th {
+  font-size: 11px; color: var(--blueprint-line); padding: 12px 16px;
+  border-bottom: 2px solid var(--blueprint-line); border-right: 1px solid var(--blueprint-grid);
+  text-align: left; font-weight: normal;
+}
+.jobs-table tbody tr {
+  border-bottom: 1px solid var(--blueprint-grid);
+  transition: background 0.1s;
+}
+.jobs-table tbody tr:hover { background: rgba(51, 161, 253, 0.1); }
+.jobs-table td { 
+  padding: 12px 16px; vertical-align: middle; 
+  border-right: 1px solid var(--blueprint-grid); 
+}
+.jobs-table td:last-child, .jobs-table th:last-child { border-right: none; }
+
+.job-name { color: var(--blueprint-line); text-decoration: none; font-size: 14px; letter-spacing: 0.05em; }
+.job-name:hover { text-decoration: underline; text-underline-offset: 4px; }
+.url-cell { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--blueprint-muted); font-size: 11px; text-transform: lowercase; }
+.actions-cell { text-align: right; }
+.streak { margin-left: 8px; color: var(--down); border: 1px solid var(--down); padding: 0 4px; font-size: 10px; }
+
+/* Status Indicators (Technical markers) */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 2px 6px; border: 1px solid currentColor; font-size: 11px;
+  background: rgba(0,0,0,0.2);
+}
+/* Drafting node for chip */
+.chip::before {
+  content: ''; display: inline-block; width: 6px; height: 6px; 
+  background: currentColor;
+}
+.chip-up { color: var(--up); }
+.chip-down { color: var(--down); }
+.chip-paused { color: var(--paused); }
+.chip-unknown { color: var(--blueprint-muted); }
+
+/* Events Log */
+.events { list-style: none; margin: 16px 0; padding: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--blueprint-grid); }
+.event {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 12px 16px 12px 24px; position: relative;
+  border-bottom: 1px solid rgba(29, 79, 136, 0.3);
+}
+.event:last-child { border-bottom: none; }
+/* Timeline connector */
+.event::before {
+  content: ''; position: absolute; left: -4px; top: 16px; width: 7px; height: 7px; 
+  background: var(--blueprint-bg); border: 1px solid currentColor;
+}
+.event-down::before { border-color: var(--down); }
+.event-recovered::before { border-color: var(--up); }
+.event-paused::before, .event-resumed::before { border-color: var(--paused); }
+
+.dot { display: none; } /* Hide old dot in favor of timeline connector */
+
+/* Forms */
+.form { display: flex; flex-direction: column; gap: 20px; }
+.form label { display: block; font-size: 11px; color: var(--blueprint-line); letter-spacing: 0.05em; }
+.form fieldset { border: 1px solid var(--blueprint-grid); padding: 16px; margin: 0; display: flex; flex-direction: column; gap: 12px; background: rgba(0,0,0,0.2); }
+.form legend { font-size: 11px; padding: 0 8px; color: var(--blueprint-line); }
+.form input, .form select, .form textarea {
+  display: block; width: 100%; margin-top: 8px; padding: 8px 12px; font: inherit;
+  border: 1px solid var(--blueprint-grid); background: rgba(0,0,0,0.4); color: var(--blueprint-text);
+  transition: border-color 0.15s; border-radius: 0;
+}
+.form input:focus, .form select:focus, .form textarea:focus { outline: none; border-color: var(--blueprint-line); background: rgba(51,161,253,0.05); }
+.form .radio { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.form .radio input { width: auto; margin: 0; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.form-actions { display: flex; gap: 12px; margin-top: 8px; padding-top: 20px; border-top: 1px dashed var(--blueprint-grid); }
+
+/* Landing/Misc */
+.hero { padding: 64px 0 32px; text-align: center; }
+.hero h1 { font-size: 32px; border: none; letter-spacing: 0.2em; text-shadow: 2px 2px 0 var(--blueprint-grid); margin-bottom: 24px; }
+.hero .accent { color: var(--blueprint-line); }
+.hero .sub { max-width: 600px; margin: 0 auto 32px; color: var(--blueprint-text); font-size: 14px; line-height: 1.8; }
+.hero-actions { display: flex; gap: 16px; justify-content: center; margin-bottom: 16px; }
+.signin-buttons { display: flex; gap: 16px; justify-content: center; margin-top: 32px; }
+.devlogin { margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 11px; border-top: 1px dashed var(--blueprint-grid); padding-top: 16px; }
+.features, .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin: 48px 0; }
+.plan-featured { border-color: var(--blueprint-line); background: rgba(51,161,253,0.05); }
+.price { font-size: 24px; margin: 0 0 16px; color: var(--blueprint-line); }
+.plan-list { list-style: none; padding: 0; margin: 0 0 24px; color: var(--blueprint-muted); font-size: 12px; }
+.plan-list li { padding: 6px 0; border-bottom: 1px dotted var(--blueprint-grid); }
+.waitlist { text-align: center; padding: 48px 24px; background: var(--blueprint-card); border: 1px solid var(--blueprint-line); }
+.waitlist-form { display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+.waitlist-form input { min-width: 300px; }
+
+@media (max-width: 640px) {
+  .nav-email { display: none; }
+  .page-head { flex-direction: column; align-items: flex-start; }
+  .hero h1 { font-size: 24px; }
+  .jobs-table thead { display: none; }
+  .jobs-table td { display: block; border-right: none; border-bottom: 1px solid var(--blueprint-grid); }
+  .jobs-table td:last-child { border-bottom: none; }
+  .jobs-table tr { margin-bottom: 16px; display: block; border: 1px solid var(--blueprint-grid); }
+}

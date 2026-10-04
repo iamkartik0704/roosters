@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T20:12:00Z",
+  "title": "Design System: Roosters Dashboard (Blueprint)",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Drafting Cyan", "canonical": "#33a1fd" },
+      "secondary": { "role": "secondary", "displayName": "Up Green", "canonical": "#39ff14" },
+      "tertiary": { "role": "tertiary", "displayName": "Down Red", "canonical": "#ff3366" },
+      "neutral-bg": { "role": "neutral", "displayName": "Blueprint Paper", "canonical": "#0b2b53" }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Drafting style outline button",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Run Now</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; border-radius: 0; border: 1px solid #33a1fd; font: 12px 'Roboto Mono', monospace; text-transform: uppercase; cursor: pointer; background: rgba(51, 161, 253, 0.05); color: #33a1fd; transition: background 0.1s; } .ds-btn-primary:hover { background: rgba(51, 161, 253, 0.2); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Blueprint / Schematic",
+    "overview": "A crisp, technical dashboard that treats cron jobs as structured engineering elements. Using a dense architectural grid, blueprint blues, and strict drafting lines, the UI feels like a live technical drawing of the system's infrastructure.",
+    "keyCharacteristics": [],
+    "rules": [],
+    "dos": ["Do use strict uppercase monospace typography everywhere.", "Do rely on 1px borders and hard lines rather than background fills."],
+    "donts": ["Don't use border-radius (keep all corners 0px).", "Don't use soft shadows (keep shadows 0px blur)."]
+  }
+}

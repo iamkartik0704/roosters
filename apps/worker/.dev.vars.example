@@ -1,0 +1,23 @@
+# Local dev secrets — copy to .dev.vars and fill in. NEVER commit .dev.vars.
+
+# openssl rand -hex 32
+ENCRYPTION_KEY=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+
+# GitHub OAuth app: http://github.com/settings/developers
+#   Callback URL: http://127.0.0.1:8787/api/auth/github/callback
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+# Google OAuth client: http://console.cloud.google.com/apis/credentials
+#   Redirect URI: http://127.0.0.1:8787/api/auth/google/callback
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# Local dev convenience login (POST /api/auth/dev-login). Never set in production.
+ALLOW_DEV_LOGIN=true
+
+# log = print to console | brevo = Brevo HTTP API (needs BREVO_API_KEY)
+EMAIL_PROVIDER=log
+EMAIL_FROM=alerts@example.com
+EMAIL_FROM_NAME=CronPulse
+# BREVO_API_KEY=

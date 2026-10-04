@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T20:15:00Z",
+  "title": "Design System: Roosters Dashboard (Modern Glass)",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Electric Violet", "canonical": "#8B5CF6" },
+      "secondary": { "role": "secondary", "displayName": "Electric Cyan", "canonical": "#06B6D4" },
+      "neutral-bg": { "role": "neutral", "displayName": "Deep Void", "canonical": "#09090b" },
+      "neutral-surface": { "role": "neutral", "displayName": "Glass Surface", "canonical": "rgba(24, 24, 27, 0.6)" }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Vibrant gradient button with hover lift",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Run Now</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 8px; font: 500 14px 'Inter', sans-serif; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary { background: linear-gradient(135deg, #8B5CF6, #06B6D4); border: none; color: #fff; box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3); } .ds-btn-primary:hover { box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4); transform: translateY(-1px); }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "status-chip",
+      "description": "Pill-shaped translucent status indicator",
+      "html": "<span class=\"ds-chip ds-chip-up\">up</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; font: 600 12px 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; } .ds-chip::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; } .ds-chip-up { color: #10b981; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); } .ds-chip-up::before { background: #10b981; box-shadow: 0 0 8px #10b981; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Sleek Modern Glass",
+    "overview": "A high-end, contemporary dark mode that feels premium and state-of-the-art. It utilizes subtle glassmorphism (translucent surfaces with background blur), deep ambient gradients, and crisp geometric sans-serif typography.",
+    "keyCharacteristics": [],
+    "rules": [],
+    "dos": ["Do use backdrop-filter: blur(12px) on surfaces to maintain the glassmorphic feel.", "Do use negative letter-spacing (-0.02em) on headings for a tighter, premium look."],
+    "donts": ["Don't use solid, opaque backgrounds for cards; always let the ambient background glow show through slightly.", "Don't use sharp 0px corners on interactive elements."]
+  }
+}

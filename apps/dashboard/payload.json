@@ -1,0 +1,95 @@
+{
+  "title": "Choose the visual world for Roosters",
+  "question": "The roll assigned The Blueprint/Schematic. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Blueprint / Schematic",
+      "kicker": "THE ROLL",
+      "lineage": "Technical drafting and schematics",
+      "thesis": "A crisp, technical dashboard that treats cron jobs as structured engineering elements.",
+      "palette": ["#0b132b", "#1c2541", "#3a506b", "#5bc0be", "#ffffff", "#ff4d4d", "#00ff00"],
+      "materials": ["blueprint grid", "monospace labels", "drafting lines"],
+      "viewport": "A dense but organized grid showing active jobs, latest pings, and alert status, with drafting lines separating regions.",
+      "risk": "Can look overly complicated or cluttered if spacing is not strictly maintained.",
+      "raised": [
+        {
+          "from": "challenger-chicago-transit",
+          "raise": "High-contrast status colour coding (bold red for failure, vibrant green for success)."
+        },
+        {
+          "from": "challenger-zoo-map",
+          "raise": "Unified SVG-style border scaling for a crisp, app-like feel."
+        }
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "The Server Rack",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Data center hardware",
+      "thesis": "A tactile, hardware-inspired dashboard where jobs are rack-mounted units.",
+      "palette": ["#111111", "#222222", "#444444", "#00ffcc", "#ff3333"],
+      "materials": ["brushed metal", "LED glow", "ventilation grilles"],
+      "viewport": "Rows of 'hardware units' representing cron jobs, with glowing status lights.",
+      "risk": "Also the direction most runs in this category land on. Can feel heavy.",
+      "comp": ".impeccable/mocks/decision/model-pick.webp"
+    },
+    {
+      "id": "challenger-braun-rt20",
+      "label": "Braun RT 20",
+      "verdict": "competitive",
+      "lineage": "Vintage Dieter Rams industrial design",
+      "thesis": "A deeply tactile, minimalist console prioritizing physical affordances.",
+      "palette": ["#f5f5f0", "#e0e0da", "#333333", "#ff6b00"],
+      "materials": ["matte plastic", "recessed dials", "warm off-white grounds"],
+      "viewport": "A starkly clean dashboard with mechanical-feeling toggles and an orange alert accent.",
+      "case": "Fuses cleanly: brings absolute clarity to task monitoring without the typical dark-mode tropes.",
+      "risk": "Can feel disconnected from software expectations if controls are too literal.",
+      "comp": ".impeccable/mocks/decision/challenger-braun-rt20.webp",
+      "hero": "https://impeccable.style/worlds/cards/hardware-instruments-braun-rt20-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/hardware-instruments-braun-rt20.webp"
+    },
+    {
+      "id": "challenger-chicago-transit",
+      "label": "Chicago Transit Map",
+      "verdict": "declined",
+      "lineage": "High-density transit wayfinding",
+      "palette": ["#ffffff", "#e3000f", "#009b3a", "#00a1df", "#000000"],
+      "materials": ["thick routing lines", "bold station dots"],
+      "case": "Fuses poorly: transit implies complex geographic routing, which overcomplicates simple cron monitoring.",
+      "kept": "High-contrast status colour coding (bold red for failure, vibrant green for success).",
+      "hero": "https://impeccable.style/worlds/cards/cst4-chicago-transit-hero.webp"
+    },
+    {
+      "id": "challenger-zoo-map",
+      "label": "Field Guide Map",
+      "verdict": "declined",
+      "lineage": "Illustrated park and zoo maps",
+      "palette": ["#f2e8cf", "#386641", "#bc4749", "#a7c957"],
+      "materials": ["organic paths", "hand-drawn vignettes"],
+      "case": "Fuses poorly: organic illustrations contradict the precise, technical nature of cron scheduling.",
+      "kept": "Unified SVG-style border scaling for a crisp, app-like feel.",
+      "hero": "https://impeccable.style/worlds/cards/aww2-zoo-gardens-guide-map-hero.webp"
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "buildPath": {
+    "value": "code",
+    "toggle": true
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "What this category ships, executed impeccably.",
+    "palette": ["#ffffff", "#f8fafc", "#0f172a", "#3b82f6", "#ef4444", "#22c55e"],
+    "materials": ["white cards", "subtle shadows", "standard sans-serif"],
+    "viewport": "A standard sidebar navigation with white data cards on a light grey background.",
+    "risk": "Indistinguishable from the competition by design.",
+    "comp": ".impeccable/mocks/decision/canon.webp"
+  },
+  "steer": true
+}

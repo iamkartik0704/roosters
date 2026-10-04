@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T20:07:00Z",
+  "title": "Design System: Roosters Dashboard",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Neon Cyan", "canonical": "#00ffcc" },
+      "secondary": { "role": "secondary", "displayName": "Up Green", "canonical": "#39ff14" },
+      "tertiary": { "role": "tertiary", "displayName": "Down Red", "canonical": "#ff003c" },
+      "neutral-bg": { "role": "neutral", "displayName": "Rack Black", "canonical": "#0a0a0a" },
+      "neutral-surface": { "role": "neutral", "displayName": "Brushed Metal", "canonical": "#141414" }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Hardware-style glowing button",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Run Now</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 2px; border: 1px solid #2a2a2a; font: bold 14px 'Courier New', monospace; text-transform: uppercase; cursor: pointer; background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.5); } .ds-btn-primary { border-color: #00ffcc; color: #00ffcc; text-shadow: 0 0 5px rgba(0,255,204,0.3); } .ds-btn-primary:hover { background: rgba(0,255,204,0.1); border-color: #00ffcc; }"
+    },
+    {
+      "name": "Status LED (Up)",
+      "kind": "chip",
+      "refersTo": "status-chip-up",
+      "description": "Hardware LED for successful state",
+      "html": "<span class=\"ds-chip ds-chip-up\">up</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 2px; font: bold 12px 'Courier New', monospace; text-transform: uppercase; background: #111; border: 1px solid #222; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); } .ds-chip::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 1px 2px rgba(0,0,0,0.5); } .ds-chip-up { color: #39ff14; text-shadow: 0 0 5px rgba(57,255,20,0.5); } .ds-chip-up::before { background: #39ff14; box-shadow: 0 0 8px #39ff14, inset 0 0 2px #fff; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Server Rack",
+    "overview": "A tactile, hardware-inspired dashboard where jobs are represented as rack-mounted hardware units. Dark brushed metal textures, ventilation grilles, and glowing LED status lights convey that Roosters is a serious, robust tool handling mission-critical jobs.",
+    "keyCharacteristics": [],
+    "rules": [],
+    "dos": ["Do use strict monospaced typography for all elements.", "Do utilize intense box-shadow glows (e.g. 0 0 8px) for status indicators to emphasize the hardware LED aesthetic."],
+    "donts": ["Don't use flat, shadowless white surfaces.", "Don't use non-monospaced fonts."]
+  }
+}

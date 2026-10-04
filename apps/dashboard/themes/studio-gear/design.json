@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T20:17:00Z",
+  "title": "Design System: Roosters Dashboard (Studio Gear)",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Studio Orange", "canonical": "#ff4a00" },
+      "secondary": { "role": "secondary", "displayName": "Phosphor Green", "canonical": "#00ff33" },
+      "neutral-bg": { "role": "neutral", "displayName": "Anodized Black", "canonical": "#121212" },
+      "neutral-surface": { "role": "neutral", "displayName": "Surface Grey", "canonical": "#1e1e1e" }
+    }
+  },
+  "components": [
+    {
+      "name": "Hardware Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tactile, physical switch button",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Run Now</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 2px; font: 700 12px 'Helvetica Neue', sans-serif; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: #f0f0ed; background: linear-gradient(180deg, #333 0%, #222 100%); border: 1px solid #0a0a0a; border-top-color: #444; box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1); transition: all 0.1s; } .ds-btn:active { transform: translateY(2px); box-shadow: 0 1px 2px rgba(0,0,0,0.4), inset 0 2px 4px rgba(0,0,0,0.6); border-top-color: #0a0a0a; } .ds-btn-primary { background: linear-gradient(180deg, #ff6a00 0%, #ff4a00 100%); border-color: #992c00; border-top-color: #ff8b5a; text-shadow: 0 1px 2px rgba(0,0,0,0.4); } .ds-btn-primary:hover { background: linear-gradient(180deg, #ff7a22 0%, #ff6a00 100%); }"
+    },
+    {
+      "name": "Physical LED (Up)",
+      "kind": "chip",
+      "refersTo": "status-chip-up",
+      "description": "Physical diode bulb status indicator",
+      "html": "<span class=\"ds-chip ds-chip-up\">up</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a0a0a0; } .ds-chip::before { content: ''; display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #222; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.1); } .ds-chip-up::before { background: #00ff33; box-shadow: inset 0 2px 4px rgba(255,255,255,0.5), inset 0 -2px 4px rgba(0,0,0,0.4), 0 0 12px #00ff33; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Premium Studio Gear",
+    "overview": "A highly tactile, analog hardware UI inspired by premium audio equipment (e.g., synthesizers, mixing consoles). Instead of modern flat 'AI' aesthetics, this theme leans into physical affordances: deep matte black anodized aluminum, embossed chunky buttons, inset LCD screens, and intense physical LED lights.",
+    "keyCharacteristics": [],
+    "rules": [],
+    "dos": ["Do use strict top-down lighting (lighter top borders, dark bottom borders) to maintain physical realism.", "Do use inset shadows for inputs and tables to make them feel like recessed screens."],
+    "donts": ["Don't use soft, blurry dropshadows or glassmorphism. This is solid matter, not translucent glass."]
+  }
+}
