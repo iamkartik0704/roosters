@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { PLANS, type UserDTO } from '@cron/shared';
 import { api, setToken } from '../api';
 import { BRAND } from '../util';
-import { Turnstile } from '@marsidev/react-turnstile';
-
 export default function Landing({ onSignedIn }: { onSignedIn?: (user: UserDTO) => void }) {
   return (
     <>
@@ -183,7 +181,6 @@ function DevLogin({ onSignedIn }: { onSignedIn?: (user: UserDTO) => void }) {
 
 function Waitlist() {
   const [email, setEmail] = useState('');
-  const [token, setCaptchaToken] = useState<string>();
   const [state, setState] = useState<'idle' | 'busy' | 'done'>('idle');
   const [error, setError] = useState<string | null>(null);
 
@@ -192,7 +189,7 @@ function Waitlist() {
     setState('busy');
     setError(null);
     try {
-      await api.joinWaitlist(email, token);
+      await api.joinWaitlist(email);
       setState('done');
     } catch (err) {
       setState('idle');
