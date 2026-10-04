@@ -59,7 +59,13 @@ paymentsRoutes.post('/checkout', requireAuth, async (c) => {
   const { plan } = await c.req.json<{ plan: 'pro' | 'team' }>().catch(() => ({ plan: 'pro' }));
   
   const planId = plan === 'team' ? c.env.RAZORPAY_PLAN_ID_TEAM : c.env.RAZORPAY_PLAN_ID_PRO;
-  if (!c.env.RAZORPAY_KEY_ID || !c.env.RAZORPAY_KEY_SECRET || !planId) {
+  
+  // Local mock mode if Razorpay is not fully configured
+  if (!planId || planId === 'mock' || !c.env.RAZORPAY_KEY_ID) {
+    return c.json({ subscription_id: 'sub_mock123', key_id: 'rzp_test_mock', mock: true, plan });
+  }
+
+  if (!c.env.RAZORPAY_KEY_ID || !c.env.RAZORPAY_KEY_SECRET) {
     return c.json({ error: 'Payments are not configured' }, 500);
   }
 
@@ -82,4 +88,22 @@ paymentsRoutes.post('/checkout', requireAuth, async (c) => {
   
   const sub = await res.json() as { id: string };
   return c.json({ subscription_id: sub.id, key_id: c.env.RAZORPAY_KEY_ID });
+});
+
+// Endpoint to simulate a successful payment webhook in mock mode
+paymentsRoutes.post('/mock-webhook', requireAuth, async (c) => {
+  const user = c.get('user');
+  const { plan, subId } = await c.req.json<{ plan: string, subId: string }>();
+  const db = c.env.DB;
+  
+  await db.batch([
+    db.prepare(`INSERT INTO subscriptions (user_id, razorpay_sub_id, plan, status, current_end, updated_at) 
+                VALUES (?1, ?2, ?3, ?4, ?5, ?6)
+                ON CONFLICT (user_id) DO UPDATE SET 
+                razorpay_sub_id=excluded.razorpay_sub_id, plan=excluded.plan, status=excluded.status, current_end=excluded.current_end, updated_at=excluded.updated_at`)
+      .bind(user.id, subId, plan, 'active', Date.now() + 30 * 24 * 60 * 60 * 1000, Date.now()),
+    db.prepare(`UPDATE users SET plan = ?1 WHERE id = ?2`).bind(plan, user.id)
+  ]);
+  
+  return c.json({ ok: true });
 });

@@ -79,8 +79,13 @@ export const api = {
     }),
 
   checkout: (plan: 'pro' | 'team') =>
-    request<{ subscription_id: string; key_id: string }>('/api/payments/checkout', {
+    request<{ subscription_id: string; key_id: string; mock?: boolean; plan?: string }>('/api/payments/checkout', {
       method: 'POST',
       body: JSON.stringify({ plan }),
+    }),
+  mockWebhook: (plan: string, subId: string) =>
+    request<{ ok: true }>('/api/payments/mock-webhook', {
+      method: 'POST',
+      body: JSON.stringify({ plan, subId }),
     }),
 };

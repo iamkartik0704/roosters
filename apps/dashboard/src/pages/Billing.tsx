@@ -10,8 +10,18 @@ export default function Billing({ user }: { user: UserDTO }) {
     setBusy(true);
     setError(null);
     try {
-      const { subscription_id, key_id } = await api.checkout(plan);
+      const { subscription_id, key_id, mock, plan: returnedPlan } = await api.checkout(plan) as any;
       
+      if (mock) {
+        if (window.confirm(`[Mock Mode] Simulate successful payment for ${returnedPlan.toUpperCase()}?`)) {
+          await api.mockWebhook(returnedPlan, subscription_id);
+          window.location.reload();
+        } else {
+          setBusy(false);
+        }
+        return;
+      }
+
       const loadScript = () => new Promise((resolve) => {
         if ((window as any).Razorpay) return resolve(true);
         const script = document.createElement('script');
@@ -46,7 +56,7 @@ export default function Billing({ user }: { user: UserDTO }) {
     } catch (err) {
       setError((err as Error).message);
     } finally {
-      setBusy(false);
+      if (!(window as any).Razorpay) setBusy(false); // If Razorpay widget opened, leave busy to prevent double click
     }
   };
 
