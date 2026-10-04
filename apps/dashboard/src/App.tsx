@@ -85,20 +85,20 @@ export default function App() {
           />
           {loaded && (
             <Routes>
-              <Route path="/" element={user ? <Jobs user={user} /> : <Landing onSignedIn={setUser} />} />
+              <Route path="/" element={user ? <Jobs user={user} /> : <Landing />} />
               <Route path="/auth/callback" element={<AuthCallback onSignedIn={setUser} />} />
-              <Route path="/jobs" element={user ? <Jobs user={user} /> : <Landing onSignedIn={setUser} />} />
-              <Route path="/jobs/new" element={user ? <JobForm /> : <Landing onSignedIn={setUser} />} />
-              <Route path="/jobs/:id" element={user ? <JobDetail /> : <Landing onSignedIn={setUser} />} />
-              <Route path="/jobs/:id/edit" element={user ? <JobForm /> : <Landing onSignedIn={setUser} />} />
-              <Route path="/billing" element={user ? <Billing user={user} /> : <Landing onSignedIn={setUser} />} />
-              <Route path="/settings" element={user ? <Settings user={user} /> : <Landing onSignedIn={setUser} />} />
+              <Route path="/jobs" element={user ? <Jobs user={user} /> : <Landing />} />
+              <Route path="/jobs/new" element={user ? <JobForm /> : <Landing />} />
+              <Route path="/jobs/:id" element={user ? <JobDetail /> : <Landing />} />
+              <Route path="/jobs/:id/edit" element={user ? <JobForm /> : <Landing />} />
+              <Route path="/billing" element={user ? <Billing user={user} /> : <Landing />} />
+              <Route path="/settings" element={user ? <Settings user={user} /> : <Landing />} />
               <Route path="/status/:slug" element={<StatusPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/refund" element={<Refund />} />
               <Route path="/aup" element={<AUP />} />
-              <Route path="*" element={<Landing onSignedIn={setUser} />} />
+              <Route path="*" element={<Landing />} />
             </Routes>
           )}
         </main>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { PLANS, type UserDTO } from '@cron/shared';
+import { PLANS } from '@cron/shared';
 import { api } from '../api';
 import { BRAND } from '../util';
-export default function Landing({ onSignedIn }: { onSignedIn?: (user: UserDTO) => void }) {
+export default function Landing() {
   return (
     <>
       <section className="hero">
