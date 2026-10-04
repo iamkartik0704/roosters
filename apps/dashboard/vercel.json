@@ -3,6 +3,10 @@
     {
       "source": "/api/:match*",
       "destination": "https://cronpulse.judixtester.workers.dev/api/:match*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
