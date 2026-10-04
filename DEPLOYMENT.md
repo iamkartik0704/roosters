@@ -37,8 +37,9 @@ npx wrangler secret put GITHUB_CLIENT_SECRET
 npx wrangler secret put GOOGLE_CLIENT_ID
 npx wrangler secret put GOOGLE_CLIENT_SECRET
 
-# A random long string used for cookie encryption
-npx wrangler secret put SESSION_SECRET
+# The 32-byte (64 char hex) secret used to encrypt cookies and database fields
+# You can generate one by running `openssl rand -hex 32` or similar.
+npx wrangler secret put ENCRYPTION_KEY
 
 # Razorpay Keys (If you want real payments, use your Live keys. For testing on the real site, use Test keys)
 npx wrangler secret put RAZORPAY_KEY_ID
