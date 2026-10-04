@@ -23,9 +23,9 @@
   "vars": {
     "WORKER_URL": "https://cronpulse.judixtester.workers.dev",
     "DASHBOARD_URL": "http://localhost:5173, http://localhost:5174, https://cronpulse.judixtester.workers.dev",
-    "EMAIL_PROVIDER": "log",
-    "EMAIL_FROM": "alerts@example.com",
-    "EMAIL_FROM_NAME": "CronPulse",
+    "EMAIL_PROVIDER": "brevo",
+    "EMAIL_FROM": "roosters.alert@gmail.com",
+    "EMAIL_FROM_NAME": "Roosters",
     "USER_AGENT": "CronPulse/1.0 (scheduled HTTP monitor)"
   },
   "observability": {
