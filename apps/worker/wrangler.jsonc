@@ -22,7 +22,7 @@
   },
   "vars": {
     "WORKER_URL": "https://cronpulse.judixtester.workers.dev",
-    "DASHBOARD_URL": "http://localhost:5173, http://localhost:5174, https://cronpulse.judixtester.workers.dev",
+    "DASHBOARD_URL": "http://localhost:5173, http://localhost:5174, https://cronpulse.judixtester.workers.dev, https://roosters-alpha.vercel.app",
     "EMAIL_PROVIDER": "brevo",
     "EMAIL_FROM": "roosters.alert@gmail.com",
     "EMAIL_FROM_NAME": "Roosters",
