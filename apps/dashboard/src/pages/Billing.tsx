@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { api } from '../api';
 import { type UserDTO, PLANS } from '@cron/shared';
 
@@ -13,12 +14,18 @@ export default function Billing({ user }: { user: UserDTO }) {
       const { subscription_id, key_id, mock, plan: returnedPlan } = await api.checkout(plan) as any;
       
       if (mock) {
-        if (window.confirm(`[Mock Mode] Simulate successful payment for ${returnedPlan.toUpperCase()}?`)) {
-          await api.mockWebhook(returnedPlan, subscription_id);
-          window.location.reload();
-        } else {
+        toast.promise(
+          api.mockWebhook(returnedPlan, subscription_id),
+          {
+            loading: 'Simulating Razorpay checkout...',
+            success: `Payment successful! Upgraded to ${returnedPlan.toUpperCase()}`,
+            error: 'Mock payment failed'
+          }
+        ).then(() => {
+          setTimeout(() => window.location.reload(), 2000);
+        }).catch(() => {
           setBusy(false);
-        }
+        });
         return;
       }
 
