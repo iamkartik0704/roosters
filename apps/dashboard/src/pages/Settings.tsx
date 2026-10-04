@@ -4,12 +4,19 @@ import { PLANS } from '@cron/shared';
 import { api } from '../api';
 import { timeAgo } from '../util';
 
+// Lock Icon SVG
+const LockIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" style={{ marginBottom: '12px', opacity: 0.5 }}>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </svg>
+);
+
 export default function Settings({ user }: { user: UserDTO }) {
   const [keys, setKeys] = useState<any[]>([]);
   const [channels, setChannels] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   
-  // New channel state
   const [newChannelType, setNewChannelType] = useState('email');
   const [newChannelTarget, setNewChannelTarget] = useState('');
   
@@ -86,6 +93,21 @@ export default function Settings({ user }: { user: UserDTO }) {
     }
   };
 
+  const LockedOverlay = ({ title, cta, plan }: { title: string, cta: string, plan: 'pro' | 'team' }) => (
+    <div style={{
+      padding: '48px 32px',
+      textAlign: 'center',
+      background: 'repeating-linear-gradient(45deg, #0a0a0a, #0a0a0a 10px, #0f0f0f 10px, #0f0f0f 20px)',
+      border: '1px solid var(--dark-grey)',
+      borderRadius: '4px',
+      boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8)'
+    }}>
+      <LockIcon />
+      <p className="muted" style={{ marginBottom: '24px', fontSize: '15px' }}>{title}</p>
+      <a href="/billing" className={plan === 'pro' ? 'btn btn-primary' : 'btn btn-ghost'}>{cta}</a>
+    </div>
+  );
+
   return (
     <div className="narrow">
       <header style={{ marginBottom: '32px' }}>
@@ -105,10 +127,7 @@ export default function Settings({ user }: { user: UserDTO }) {
         </div>
         
         {user.plan === 'free' ? (
-          <div style={{ padding: '32px', textAlign: 'center', background: 'rgba(0,0,0,0.5)', border: '1px dashed var(--line)', borderRadius: '4px' }}>
-            <p className="muted" style={{ marginBottom: '16px' }}>Public status pages are available on the Pro plan.</p>
-            <a href="/billing" className="btn btn-primary">Upgrade to Pro</a>
-          </div>
+          <LockedOverlay title="Public status pages are available on the Pro plan." cta="Upgrade to Pro" plan="pro" />
         ) : (
           <form className="form" onSubmit={saveStatusPage}>
             <label>
@@ -117,16 +136,33 @@ export default function Settings({ user }: { user: UserDTO }) {
             </label>
             <label>
               URL Slug
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--black)', padding: '0 12px', border: '1px solid var(--dark-grey)', borderRadius: '2px', marginTop: '6px' }}>
-                <span className="muted">{window.location.origin}/status/</span>
-                <input required placeholder="my-company" value={spSlug} onChange={e => setSpSlug(e.target.value)} pattern="[a-z0-9-]+" style={{ border: 'none', paddingLeft: 0, boxShadow: 'none', background: 'transparent' }} />
+              <div style={{ display: 'flex', alignItems: 'stretch', background: 'var(--black)', border: '1px solid var(--line)', borderRadius: '2px', marginTop: '6px', overflow: 'hidden' }}>
+                <span className="muted" style={{ padding: '0 12px', background: '#111', borderRight: '1px solid var(--line)', display: 'flex', alignItems: 'center' }}>
+                  {window.location.origin}/status/
+                </span>
+                <input required placeholder="my-company" value={spSlug} onChange={e => setSpSlug(e.target.value)} pattern="[a-z0-9-]+" style={{ border: 'none', borderRadius: 0, flex: 1, margin: 0, boxShadow: 'none' }} />
               </div>
             </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '16px 0', textTransform: 'none', color: 'var(--white)' }}>
-              <input type="checkbox" checked={spPublished} onChange={e => setSpPublished(e.target.checked)} style={{ width: 'auto', marginTop: 0 }} />
-              Published (visible to anyone with the link)
+            
+            <label style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '24px 0', cursor: 'pointer', textTransform: 'none', color: 'var(--white)' }}>
+              <div style={{
+                width: '40px', height: '22px', borderRadius: '11px',
+                background: spPublished ? 'var(--accent)' : 'var(--line)',
+                position: 'relative', transition: 'background 0.2s'
+              }}>
+                <div style={{
+                  width: '16px', height: '16px', borderRadius: '50%', background: '#000',
+                  position: 'absolute', top: '3px', left: spPublished ? '21px' : '3px',
+                  transition: 'left 0.2s', boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                }} />
+              </div>
+              <input type="checkbox" checked={spPublished} onChange={e => setSpPublished(e.target.checked)} style={{ display: 'none' }} />
+              <span style={{ fontSize: '14px', color: spPublished ? 'var(--white)' : 'var(--muted)' }}>
+                Published (visible to anyone with the link)
+              </span>
             </label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '8px' }}>
               <button type="submit" className="btn btn-primary">Save Status Page</button>
               {spMsg && <span style={{ color: spMsg.includes('updated') ? 'var(--up)' : 'var(--down)', fontSize: '14px' }}>{spMsg}</span>}
               {statusPage?.published && (
@@ -147,24 +183,21 @@ export default function Settings({ user }: { user: UserDTO }) {
         </div>
         
         {user.plan === 'free' ? (
-          <div style={{ padding: '32px', textAlign: 'center', background: 'rgba(0,0,0,0.5)', border: '1px dashed var(--line)', borderRadius: '4px' }}>
-            <p className="muted" style={{ marginBottom: '16px' }}>Free plan alerts are automatically sent to <strong>{user.email}</strong>.<br/>Upgrade to Pro to unlock Slack, Discord, Telegram, and Webhooks.</p>
-            <a href="/billing" className="btn btn-primary">Upgrade to Pro</a>
-          </div>
+          <LockedOverlay title={`Free plan alerts are automatically sent to ${user.email}. Upgrade to Pro to unlock Slack, Discord, Telegram, and Webhooks.`} cta="Upgrade to Pro" plan="pro" />
         ) : (
           <>
-            <form className="form" onSubmit={createChannel} style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', marginBottom: '24px' }}>
-              <label style={{ flex: 1 }}>
+            <form className="form" onSubmit={createChannel} style={{ display: 'grid', gridTemplateColumns: '1fr 3fr auto', gap: '12px', alignItems: 'end', marginBottom: '32px' }}>
+              <label style={{ margin: 0 }}>
                 Type
-                <select value={newChannelType} onChange={e => setNewChannelType(e.target.value)}>
+                <select value={newChannelType} onChange={e => setNewChannelType(e.target.value)} style={{ marginTop: '6px' }}>
                   {limits.alertChannels.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </label>
-              <label style={{ flex: 3 }}>
+              <label style={{ margin: 0 }}>
                 Target (Email, webhook URL, etc.)
-                <input required placeholder="https://..." value={newChannelTarget} onChange={e => setNewChannelTarget(e.target.value)} />
+                <input required placeholder="https://..." value={newChannelTarget} onChange={e => setNewChannelTarget(e.target.value)} style={{ marginTop: '6px' }} />
               </label>
-              <button type="submit" className="btn btn-ghost" style={{ padding: '8px 16px', height: '39px', marginBottom: '1px' }}>Add</button>
+              <button type="submit" className="btn btn-ghost" style={{ padding: '0 24px', height: '42px', marginBottom: '2px' }}>Add</button>
             </form>
 
             <ul className="events">
@@ -193,10 +226,7 @@ export default function Settings({ user }: { user: UserDTO }) {
         </div>
         
         {user.plan !== 'team' ? (
-          <div style={{ padding: '32px', textAlign: 'center', background: 'rgba(0,0,0,0.5)', border: '1px dashed var(--line)', borderRadius: '4px' }}>
-            <p className="muted" style={{ marginBottom: '16px' }}>API Keys are exclusively available on the Team plan.</p>
-            <a href="/billing" className="btn btn-ghost">Upgrade to Team</a>
-          </div>
+          <LockedOverlay title="API Keys are exclusively available on the Team plan." cta="Upgrade to Team" plan="team" />
         ) : (
           <>
             <button className="btn btn-primary" onClick={createKey} style={{ marginBottom: '16px' }}>
