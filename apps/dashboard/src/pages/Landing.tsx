@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PLANS, type UserDTO } from '@cron/shared';
-import { api, setToken } from '../api';
+import { api } from '../api';
 import { BRAND } from '../util';
 export default function Landing({ onSignedIn }: { onSignedIn?: (user: UserDTO) => void }) {
   return (
@@ -27,7 +27,6 @@ export default function Landing({ onSignedIn }: { onSignedIn?: (user: UserDTO) =
           Free tier: 3 jobs · GET pings every 10 minutes · email alerts on down &amp; recovered · last 50
           events.
         </p>
-        <DevLogin onSignedIn={onSignedIn} />
       </section>
 
       <section id="features" className="features-section">
@@ -148,36 +147,7 @@ function authHref(provider: 'github' | 'google'): string {
   return `/api/auth/${provider}/start?redirect=${redirect}`;
 }
 
-/** Local-only quick login; the endpoint 404s unless ALLOW_DEV_LOGIN is set. */
-function DevLogin({ onSignedIn }: { onSignedIn?: (user: UserDTO) => void }) {
-  const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
 
-  const devLogin = async () => {
-    setBusy(true);
-    setError(null);
-    try {
-      const res = await fetch('/api/auth/dev-login', { method: 'POST' });
-      if (!res.ok) throw new Error();
-      const { token } = (await res.json()) as { token: string };
-      setToken(token);
-      onSignedIn?.(await api.me());
-    } catch {
-      setError('Dev login unavailable — set ALLOW_DEV_LOGIN=true in .dev.vars');
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  return (
-    <div className="devlogin">
-      <button className="btn btn-ghost btn-small" onClick={devLogin} disabled={busy}>
-        {busy ? 'Signing in…' : 'Dev login (local only)'}
-      </button>
-      {error && <p className="error small">{error}</p>}
-    </div>
-  );
-}
 
 function Waitlist() {
   const [email, setEmail] = useState('');

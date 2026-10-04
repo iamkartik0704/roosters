@@ -33,6 +33,10 @@ Cloudflare Workers use `wrangler secret put` to securely store environment varia
 npx wrangler secret put GITHUB_CLIENT_ID
 npx wrangler secret put GITHUB_CLIENT_SECRET
 
+# Google OAuth (If using Google Sign-In, add these too)
+npx wrangler secret put GOOGLE_CLIENT_ID
+npx wrangler secret put GOOGLE_CLIENT_SECRET
+
 # A random long string used for cookie encryption
 npx wrangler secret put SESSION_SECRET
 
