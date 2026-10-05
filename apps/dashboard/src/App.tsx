@@ -61,6 +61,12 @@ export default function App() {
               <>
                 <a href="/#features">Features</a>
                 <a href="/#pricing">Pricing</a>
+                <a href="/#auth" className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: '0.9rem' }} onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}>
+                  Sign in
+                </a>
               </>
             )}
           </nav>
