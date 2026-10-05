@@ -2,7 +2,7 @@ export function Terms() {
   return (
     <div className="card">
       <h1>Terms of Service</h1>
-      <p>By using CronPulse, you agree to not abuse our service.</p>
+      <p>By using Roosters, you agree to not abuse our service.</p>
     </div>
   );
 }
@@ -29,7 +29,7 @@ export function AUP() {
   return (
     <div className="card">
       <h1>Acceptable Use Policy</h1>
-      <p>You may not use CronPulse to launch denial of service attacks, scan ports, or hit unauthorized endpoints. Violators will be banned.</p>
+      <p>You may not use Roosters to launch denial of service attacks, scan ports, or hit unauthorized endpoints. Violators will be banned.</p>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import type { Env } from '../env';
 import { createEmailSender, type EmailMessage } from './sender';
 import { decryptString } from '../crypto';
 
-const BRAND = 'CronPulse'; // working name — change here and in the dashboard
+const BRAND = 'Roosters'; // working name — change here and in the dashboard
 
 /**
  * One email per user per tick listing all their affected jobs (plan section 8:

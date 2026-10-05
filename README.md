@@ -1,4 +1,4 @@
-# CronPulse — Cron-as-a-Service
+# Roosters — Cron-as-a-Service
 
 > Working name. Hosted service that calls a user's URL on a schedule, alerts when
 > it fails, and keeps the history. Built on the plan in `cron job final.pdf`
@@ -48,7 +48,7 @@ Deviations from the plan (deliberate, both documented in the plan review):
 
 ## Why Cloudflare Workers & D1? (Scalability)
 
-CronPulse is built on a 100% serverless edge architecture. If you're wondering why we didn't use Docker or traditional containers for scalability:
+Roosters is built on a 100% serverless edge architecture. If you're wondering why we didn't use Docker or traditional containers for scalability:
 - **Infinite Scale-to-Zero and Scale-Out**: V8 isolates spin up globally in milliseconds exactly when a cron tick fires, and instantly spin down. You pay only for exact CPU time used.
 - **Distributed Global Execution**: The pinging engine naturally executes from edge nodes closer to your users' servers, heavily reducing network latency and preventing timeout bottlenecks.
 - **Zero Maintenance Overhead**: There are no load balancers to configure, no container health checks to monitor, and no node scaling limits to worry about.
@@ -73,7 +73,7 @@ npm install
 
 # 1. Create the local D1 database and apply the schema
 cd apps/worker
-npx wrangler d1 migrations apply cronpulse --local
+npx wrangler d1 migrations apply Roosters --local
 
 # 2. Configure secrets locally
 cp .dev.vars.example .dev.vars
@@ -114,8 +114,8 @@ curl "http://127.0.0.1:8787/__scheduled?cron=*+*+*+*+*"
 
 ```bash
 # One-time
-npx wrangler d1 create cronpulse          # paste the id into wrangler.jsonc
-npx wrangler d1 migrations apply cronpulse --remote
+npx wrangler d1 create Roosters          # paste the id into wrangler.jsonc
+npx wrangler d1 migrations apply Roosters --remote
 
 # Secrets (production)
 npx wrangler secret put ENCRYPTION_KEY    # openssl rand -hex 32

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { pingJob, type PingableJob } from '../src/ping';
 import type { PingEnv } from '../src/ping';
 
-const env: PingEnv = { ENCRYPTION_KEY: 'x'.repeat(32), USER_AGENT: 'CronPulse/1.0 (test)' };
+const env: PingEnv = { ENCRYPTION_KEY: 'x'.repeat(32), USER_AGENT: 'Roosters/1.0 (test)' };
 
 const job = (overrides: Partial<PingableJob> = {}): PingableJob => ({
   url: 'https://example.com/health',
@@ -81,7 +81,7 @@ describe('pingJob', () => {
     }) as unknown as typeof fetch;
     await pingJob(job({ method: 'POST', requireHttps: false }), env, fetchImpl);
     expect(seenInit?.method).toBe('POST');
-    expect((seenInit?.headers as Headers).get('User-Agent')).toBe('CronPulse/1.0 (test)');
+    expect((seenInit?.headers as Headers).get('User-Agent')).toBe('Roosters/1.0 (test)');
   });
 
   it('enforces success conditions: bodyContains', async () => {

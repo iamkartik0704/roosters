@@ -42,7 +42,7 @@ export default function Billing({ user }: { user: UserDTO }) {
       const options = {
         key: key_id,
         subscription_id,
-        name: 'CronPulse',
+        name: 'Roosters',
         description: `Upgrade to ${plan.toUpperCase()}`,
         handler: function () {
           window.location.reload();

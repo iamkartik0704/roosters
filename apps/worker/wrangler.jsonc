@@ -26,7 +26,7 @@
     "EMAIL_PROVIDER": "brevo",
     "EMAIL_FROM": "roosters.alert@gmail.com",
     "EMAIL_FROM_NAME": "Roosters",
-    "USER_AGENT": "CronPulse/1.0 (scheduled HTTP monitor)"
+    "USER_AGENT": "Roosters/1.0 (scheduled HTTP monitor)"
   },
   "observability": {
     "enabled": true

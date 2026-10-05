@@ -29,7 +29,7 @@ app.use(
   }),
 );
 
-app.get('/api/health', (c) => c.json({ ok: true, name: 'cronpulse', time: Date.now() }));
+app.get('/api/health', (c) => c.json({ ok: true, name: 'Roosters', time: Date.now() }));
 
 app.route('/api/auth', authRoutes);
 app.route('/api/waitlist', waitlistRoutes);

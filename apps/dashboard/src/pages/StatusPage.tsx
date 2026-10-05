@@ -66,7 +66,7 @@ export default function StatusPage() {
         )}
       </div>
       <footer style={{ textAlign: 'center', marginTop: '3rem', fontSize: '0.9rem' }} className="muted">
-        Powered by CronPulse
+        Powered by Roosters
       </footer>
     </div>
   );
