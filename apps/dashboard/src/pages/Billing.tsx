@@ -92,7 +92,7 @@ export default function Billing({ user }: { user: UserDTO }) {
         </div>
       </div>
 
-      {user.plan === 'free' && (
+      {user.plan !== 'team' && (
         <section>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
             <h3 style={{ margin: 0, letterSpacing: '1px' }}>Available Upgrades</h3>
@@ -107,8 +107,9 @@ export default function Billing({ user }: { user: UserDTO }) {
             </div>
           </div>
           <div className="pricing">
-            <article className="card plan plan-featured">
-              <h3>Pro</h3>
+            {user.plan === 'free' && (
+              <article className="card plan plan-featured">
+                <h3>Pro</h3>
               <p className="price">₹249<span className="muted" style={{ fontSize: '14px' }}>/mo</span></p>
               <ul className="plan-list">
                 <li>Down to 1-minute runs</li>
@@ -117,10 +118,11 @@ export default function Billing({ user }: { user: UserDTO }) {
                 <li>Retries + success conditions</li>
                 <li>30-day history</li>
               </ul>
-              <button className="btn btn-primary" disabled={busy} onClick={() => upgrade('pro')} style={{ width: '100%', marginTop: 'auto' }}>
-                {busy ? 'Processing...' : 'Upgrade to Pro'}
-              </button>
-            </article>
+                <button className="btn btn-primary" disabled={busy} onClick={() => upgrade('pro')} style={{ width: '100%', marginTop: 'auto' }}>
+                  {busy ? 'Processing...' : 'Upgrade to Pro'}
+                </button>
+              </article>
+            )}
 
             <article className="card plan">
               <h3>Team</h3>
