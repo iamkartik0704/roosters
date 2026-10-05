@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { PLANS } from '@cron/shared';
-import { api } from '../api';
 import { BRAND } from '../util';
 export default function Landing() {
   return (
