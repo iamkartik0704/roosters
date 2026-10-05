@@ -5,7 +5,7 @@ import type { Env } from './env';
 import { pingJobs, type PingableJob } from './ping';
 import { evaluateOutcomes, type JobPatch, type JobRowLike, type TickEvaluation } from './state';
 import { notifyStateChanges } from './email/notify';
-import { parseExpression } from 'cron-parser';
+import { CronExpressionParser } from 'cron-parser';
 
 const TICK_LIMIT = TICK_PING_BUDGET;
 
@@ -113,7 +113,7 @@ export async function runTick(
     for (const job of dueJobs) {
       if (job.cronExpression) {
         try {
-          const interval = parseExpression(job.cronExpression, {
+          const interval = CronExpressionParser.parse(job.cronExpression, {
             tz: job.timezone || 'UTC',
             currentDate: new Date(Date.now())
           });
