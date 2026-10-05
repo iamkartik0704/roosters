@@ -78,10 +78,10 @@ export const api = {
       return true;
     }),
 
-  checkout: (plan: 'pro' | 'team') =>
+  checkout: (plan: 'pro' | 'team', coupon?: string) =>
     request<{ subscription_id: string; key_id: string; mock?: boolean; plan?: string }>('/api/payments/checkout', {
       method: 'POST',
-      body: JSON.stringify({ plan }),
+      body: JSON.stringify({ plan, coupon }),
     }),
   mockWebhook: (plan: string, subId: string) =>
     request<{ ok: true }>('/api/payments/mock-webhook', {

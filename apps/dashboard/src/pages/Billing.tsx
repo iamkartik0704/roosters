@@ -6,12 +6,13 @@ import { type UserDTO, PLANS } from '@cron/shared';
 export default function Billing({ user }: { user: UserDTO }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [couponCode, setCouponCode] = useState('');
 
   const upgrade = async (plan: 'pro' | 'team') => {
     setBusy(true);
     setError(null);
     try {
-      const { subscription_id, key_id, mock, plan: returnedPlan } = await api.checkout(plan) as any;
+      const { subscription_id, key_id, mock, plan: returnedPlan } = await api.checkout(plan, couponCode) as any;
       
       if (mock) {
         toast.promise(
@@ -93,7 +94,18 @@ export default function Billing({ user }: { user: UserDTO }) {
 
       {user.plan === 'free' && (
         <section>
-          <h3 style={{ marginBottom: '24px', letterSpacing: '1px' }}>Available Upgrades</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <h3 style={{ margin: 0, letterSpacing: '1px' }}>Available Upgrades</h3>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input
+                type="text"
+                placeholder="Coupon Code"
+                value={couponCode}
+                onChange={e => setCouponCode(e.target.value)}
+                style={{ padding: '8px 12px', background: '#111', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+              />
+            </div>
+          </div>
           <div className="pricing">
             <article className="card plan plan-featured">
               <h3>Pro</h3>

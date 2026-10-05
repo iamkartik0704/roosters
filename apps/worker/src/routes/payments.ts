@@ -56,7 +56,22 @@ paymentsRoutes.post('/webhook', async (c) => {
 
 paymentsRoutes.post('/checkout', requireAuth, async (c) => {
   const user = c.get('user');
-  const { plan } = await c.req.json<{ plan: 'pro' | 'team' }>().catch(() => ({ plan: 'pro' }));
+  const { plan, coupon } = await c.req.json<{ plan: 'pro' | 'team', coupon?: string }>().catch(() => ({ plan: 'pro', coupon: '' }));
+  
+  // Custom Coupon System Bypass
+  if (coupon && (coupon.trim().toUpperCase() === 'FREE100' || coupon.trim().toUpperCase() === 'EARLYBIRD')) {
+    const db = c.env.DB;
+    const subId = `sub_free_${Date.now()}`;
+    await db.batch([
+      db.prepare(`INSERT INTO subscriptions (user_id, razorpay_sub_id, plan, status, current_end, updated_at) 
+                  VALUES (?1, ?2, ?3, ?4, ?5, ?6)
+                  ON CONFLICT (user_id) DO UPDATE SET 
+                  razorpay_sub_id=excluded.razorpay_sub_id, plan=excluded.plan, status=excluded.status, current_end=excluded.current_end, updated_at=excluded.updated_at`)
+        .bind(user.id, subId, plan, 'active', Date.now() + 365 * 24 * 60 * 60 * 1000, Date.now()), // 1 year free
+      db.prepare(`UPDATE users SET plan = ?1 WHERE id = ?2`).bind(plan, user.id)
+    ]);
+    return c.json({ subscription_id: subId, key_id: 'mock', mock: true, plan });
+  }
   
   const planId = plan === 'team' ? c.env.RAZORPAY_PLAN_ID_TEAM : c.env.RAZORPAY_PLAN_ID_PRO;
   
