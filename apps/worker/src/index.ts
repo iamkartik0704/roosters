@@ -49,6 +49,11 @@ app.notFound((c) => c.json({ error: 'Not found' }, 404));
 
 export default {
   fetch: app.fetch,
-  scheduled: (controller: ScheduledController, env: Env, ctx: ExecutionContext) =>
-    runTick(controller, env, ctx),
+  scheduled: (controller: ScheduledController, env: Env, ctx: ExecutionContext) => {
+    if (controller.cron === '0 0 * * 0') {
+      import('./reports').then((m) => m.runWeeklyReports(env, ctx));
+    } else {
+      runTick(controller, env, ctx);
+    }
+  },
 };
