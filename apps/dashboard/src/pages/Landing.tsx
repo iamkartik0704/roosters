@@ -67,19 +67,18 @@ export default function Landing() {
         <h2 className="section-title">Transparent Pricing</h2>
         <div className="pricing">
           <PlanCard plan="free" cta={<SigninButtons compact />} />
-        <PlanCard
-          plan="pro"
-          featured
-          cta={<p className="muted small">Pro launches with the founding-member offer — join the waitlist.</p>}
-        />
-        <PlanCard
-          plan="team"
-          cta={<p className="muted small">Teams, API keys and audit logs ship after Pro.</p>}
-        />
+          <PlanCard
+            plan="pro"
+            featured
+            cta={<SigninButtons compact />}
+          />
+          <PlanCard
+            plan="team"
+            cta={<SigninButtons compact />}
+          />
         </div>
       </section>
 
-      <Waitlist />
     </>
   );
 }
