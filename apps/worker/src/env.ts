@@ -30,6 +30,7 @@ export interface Env {
   RAZORPAY_KEY_ID?: string;
   RAZORPAY_KEY_SECRET?: string;
   RAZORPAY_WEBHOOK_SECRET?: string;
+  RAZORPAY_OFFER_ID_EARLY37?: string;
   RAZORPAY_PLAN_ID_PRO?: string;
   RAZORPAY_PLAN_ID_TEAM?: string;
 

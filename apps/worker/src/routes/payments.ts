@@ -84,16 +84,30 @@ paymentsRoutes.post('/checkout', requireAuth, async (c) => {
     return c.json({ error: 'Payments are not configured' }, 500);
   }
 
+  let offerId: string | undefined;
+  if (coupon && coupon.trim().toUpperCase() === 'EARLY37') {
+    offerId = c.env.RAZORPAY_OFFER_ID_EARLY37;
+    if (!offerId) {
+      return c.json({ error: 'Coupon EARLY37 is not configured on the server yet' }, 400);
+    }
+  }
+
   const basicAuth = btoa(`${c.env.RAZORPAY_KEY_ID}:${c.env.RAZORPAY_KEY_SECRET}`);
+  const payload: any = {
+    plan_id: planId,
+    total_count: 120,
+    customer_notify: 0,
+    notes: { user_id: user.id, plan },
+  };
+  
+  if (offerId) {
+    payload.offer_id = offerId;
+  }
+
   const res = await fetch('https://api.razorpay.com/v1/subscriptions', {
     method: 'POST',
     headers: { Authorization: `Basic ${basicAuth}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      plan_id: planId,
-      total_count: 120,
-      customer_notify: 0,
-      notes: { user_id: user.id, plan },
-    })
+    body: JSON.stringify(payload)
   });
   
   if (!res.ok) {
