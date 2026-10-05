@@ -148,49 +148,4 @@ function authHref(provider: 'github' | 'google'): string {
 
 
 
-function Waitlist() {
-  const [email, setEmail] = useState('');
-  const [state, setState] = useState<'idle' | 'busy' | 'done'>('idle');
-  const [error, setError] = useState<string | null>(null);
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setState('busy');
-    setError(null);
-    try {
-      await api.joinWaitlist(email);
-      setState('done');
-    } catch (err) {
-      setState('idle');
-      setError((err as Error).message);
-    }
-  };
-
-  return (
-    <section className="waitlist">
-      <h2>Want in early?</h2>
-      <p className="muted">
-        Founding members lock in a lower price and shape the roadmap. Free tier is open; Pro has a
-        short waitlist.
-      </p>
-      {state === 'done' ? (
-        <p className="success">You're on the list — watch your inbox.</p>
-      ) : (
-        <form className="waitlist-form" onSubmit={submit}>
-          <input
-            type="email"
-            required
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-label="Email address"
-          />
-          <button className="btn btn-primary" disabled={state === 'busy'}>
-            {state === 'busy' ? 'Joining…' : 'Join the waitlist'}
-          </button>
-        </form>
-      )}
-      {error && <p className="error">{error}</p>}
-    </section>
-  );
-}
