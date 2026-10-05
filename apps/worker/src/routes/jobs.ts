@@ -14,7 +14,7 @@ import { pickSlot } from '../slots';
 import { assertUrlAllowed } from '../urls';
 import { rateLimit, requireAuth, type AppEnv } from './middleware';
 import type { Env } from '../env';
-import * as cronParser from 'cron-parser';
+import { parseExpression } from 'cron-parser';
 
 export const jobsRoutes: Hono<AppEnv> = new Hono<AppEnv>();
 
@@ -155,7 +155,7 @@ jobsRoutes.post('/', async (c) => {
   let nextRunAt: number | null = null;
   if (input.cronExpression) {
     try {
-      const interval = (cronParser as any).parseExpression(input.cronExpression, {
+      const interval = parseExpression(input.cronExpression, {
         tz: input.timezone || 'UTC',
         currentDate: new Date(now)
       });
@@ -292,7 +292,7 @@ jobsRoutes.patch('/:id', async (c) => {
   let nextRunAt: number | null = existing.next_run_at;
   if (input.cronExpression) {
     try {
-      const interval = (cronParser as any).parseExpression(input.cronExpression, {
+      const interval = parseExpression(input.cronExpression, {
         tz: input.timezone || 'UTC',
         currentDate: new Date(now)
       });
